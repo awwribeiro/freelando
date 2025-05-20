@@ -9,12 +9,12 @@ import { CommonModule } from '@angular/common';
 
 const COMPONENTS = [
   HeaderComponent,
-  FooterComponent,
-  CadastroFormComponent
+  FooterComponent
 ];
 
 const MODULES = [
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  RouterOutlet
 ];
 
 @Component({

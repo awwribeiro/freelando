@@ -1,9 +1,11 @@
+import { CadastroService } from './../../shared/services/cadastro.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { RadioOptionComponent } from '../../shared/components/radio-option/radio-option.component';
 import { ExperienceLevelComponent } from '../../shared/components/experience-level/experience-level.component';
+import { Router } from '@angular/router';
 
 const MODULES = [
   CommonModule,
@@ -58,7 +60,9 @@ export class CadastroFormComponent implements OnInit{ //metodo de inicializacao 
     }
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, 
+              private router: Router,
+              private cadastroService: CadastroService) {}
 
   ngOnInit(): void {
     // Este método é chamado automaticamente pelo Angular logo após a criação do componente.
@@ -79,7 +83,12 @@ export class CadastroFormComponent implements OnInit{ //metodo de inicializacao 
 
   onProximo() { //proxima etapa
     if(this.cadastroForm.valid) { //se formulário estiver válido
-      console.log("Formulário Valido");
+
+      this.cadastroService.updateCadastroData({
+        areaAtuacao: this.cadastroForm.get('areasAtuacao')?.value,
+        nivelExperiencia: this.cadastroForm.get('niveisExperiencia')?.value});
+
+      this.router.navigate(['/cadastro/dados-pessoais']);
     }
   }
 
@@ -88,3 +97,4 @@ export class CadastroFormComponent implements OnInit{ //metodo de inicializacao 
   }
 
 }
+   
