@@ -1,0 +1,97 @@
+<div class="cadastro-form">
+  <div class="cadastro-form__container">
+    <div class="cadastro-form__card">
+      <h2 class="cadastro-form__title">Crie seu cadastro</h2>
+
+      <!-- (ngSubmit)= output informando qual função será chamada dentro do componente quando o forms for submetido -->
+      <form [formGroup]="cadastroForm" (ngSubmit)="onProximo()"> 
+
+        <!-- area de atuação -->
+        <!-- *ngFor="let area of areasAtuacao"
+              para cada area no array areasAtuacao, cria uma instância do componente. -->
+        <!--  [checked]="cadastroForm.get('areaAtuacao')?.value === area.value"
+              Marca o botão como selecionado (checked) se o valor atual do formulário for igual ao valor da opção. 
+              Usa cadastroForm.get('areaAtuacao')?.value para acessar o valor do campo areaAtuacao. -->
+        
+        <!-- (selectionChange)="onAreaChange($event)"
+             Ouve o evento selectionChange disparado pelo <app-radio-option>.
+             Quando disparado, executa o método onAreaChange passando o valor selecionado ($event).  -->
+        <div class="cadastro-form_section">
+          <h3 class="cadastro-form_section-title">Qual a área de atuação?</h3>
+          <div class="cadastro-form_radio-group">
+            <app-radio-option
+              *ngFor="let area of areasAtuacao" 
+              [id]="area.id"
+              [name]="'areaAtuacao'"
+              [value]="area.value"
+              [label]="area.label"
+              [checked]="cadastroForm.get('areaAtuacao')?.value === area.value"
+              (selectionChange)="onAreaChange($event)"
+            >              
+            </app-radio-option>
+
+            <!-- se o campo area de atuacao não for preenchido
+                 e se o campo area de atuacao for preenchido incorreto 
+                 aparece uma mensagem de erro -->
+            <div class="cadastro-form_error"
+                 *ngIf="cadastroForm.get('areaAtuacao')?.touched 
+                     && cadastroForm.get('areaAtuacao')?.invalid">
+                  Por favor, selecione um área de atuação.
+            </div>
+          </div>
+        </div>
+
+        <!-- nível de experiência -->
+         <!-- (levelChange)= evento personalizado: Quando o usuário escolhe um nível de experiência, esse evento é disparado com o valor correspondente.
+              O método onNivelChange é chamado no componente pai, recebendo o valor selecionado via $event -->
+        <div class="cadastro-form_section">
+          <h3 class="cadastro-form_section-title">Nível de Experiência</h3>
+          <div class="cadastro-form_radio-group">
+            <app-experience-level
+              [levels]="niveisExperiencia"
+              [selectedLevel]="cadastroForm.get('niveisExperiencia')?.value"
+              (levelChange)="onNivelChange($event)">              
+            </app-experience-level>
+
+            <!-- se o campo nivel de experiencia não for preenchido
+                 e se o campo nivel de experiencia for preenchido incorreto 
+                 aparece uma mensagem de erro -->
+            <div class="cadastro-form_error"
+                 *ngIf="cadastroForm.get('nivelExperiencia')?.touched 
+                     && cadastroForm.get('nivelExperiencia')?.invalid">
+                  Por favor, selecione o nível de experiência.
+            </div>
+          </div>
+        </div>
+
+        <div class="cadastro-form__actions">
+          <app-button
+            text="Anterior" 
+            type="outline"
+            icon="fas fa-arrow-left"
+            iconPosition="left"
+            (clicked)="onAnterior()">
+          </app-button>
+
+          <!-- [disabled]="cadastroForm.invalid" = O botão será desabilitado se o formulário (cadastroForm) for inválido. -->
+          <app-button
+            text="Próximo"
+            type="primary"
+            icon="fas fa-arrow-right"
+            iconPosition="right"
+            [disabled]="cadastroForm.invalid"
+            (clicked)="onProximo()">
+          </app-button>
+        </div>
+
+      </form>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--   -->
