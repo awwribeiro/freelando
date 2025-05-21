@@ -5,6 +5,8 @@ interface CadastroData {
   areaAtuacao?: string;
   nivelExperiencia?: string;
   nomeCompleto?: string;
+  estado?: string;
+  cidade?: string;
   email?: string;
   senha?: string;
 }
@@ -24,7 +26,7 @@ export class CadastroService {
   //expõe os dados apenas para leitura, sem permitir que outros componentes modifiquem diretamente o BehaviorSubject
   cadastroData$ = this.cadastroDataSubject.asObservable();
 
-  constructor() { 
+  constructor() {
 
     //Busca do localStorage algum dado salvo anteriormente com a chave "cadastroData".
     const savedData = localStorage.getItem('cadastroData');
@@ -40,7 +42,7 @@ export class CadastroService {
     const updatedData = { ...currentData, ...data }; //Usa spread operator para mesclar o valor atual com os novos dados recebidos [novas propriedades sobrescrevam as antigas, mas sem apagar o resto]
     this.cadastroDataSubject.next(updatedData); //Atualiza o BehaviorSubject com o novo estado
     localStorage.setItem('cadastroData', JSON.stringify(updatedData)); //Persiste os dados atualizados no localStorage, convertendo-os para string com JSON.stringify
-  } 
+  }
 
   //Método auxiliar para retornar diretamente o valor atual (síncrono), sem precisar se inscrever no observable.
   getCadastroData(): CadastroData {

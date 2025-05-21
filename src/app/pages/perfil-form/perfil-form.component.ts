@@ -14,8 +14,7 @@ import { ChipComponent } from '../../shared/components/chip/chip.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ButtonComponent,
-    ChipComponent
+    ButtonComponent
   ],
   templateUrl: './perfil-form.component.html',
   styleUrls: ['./perfil-form.component.scss']

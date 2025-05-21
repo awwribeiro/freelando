@@ -60,9 +60,9 @@ export class CadastroFormComponent implements OnInit{ //metodo de inicializacao 
     }
   ];
 
-  constructor(private fb: FormBuilder, 
+  constructor(private fb: FormBuilder,
               private router: Router,
-              private cadastroService: CadastroService) {}
+              private cadastroService: CadastroService) {} //para consumir a service no componente
 
   ngOnInit(): void {
     // Este método é chamado automaticamente pelo Angular logo após a criação do componente.
@@ -84,11 +84,12 @@ export class CadastroFormComponent implements OnInit{ //metodo de inicializacao 
   onProximo() { //proxima etapa
     if(this.cadastroForm.valid) { //se formulário estiver válido
 
+      //buscando dados do local storage (salvos para a proxima etapa)
       this.cadastroService.updateCadastroData({
         areaAtuacao: this.cadastroForm.get('areasAtuacao')?.value,
         nivelExperiencia: this.cadastroForm.get('niveisExperiencia')?.value});
 
-      this.router.navigate(['/cadastro/dados-pessoais']);
+      this.router.navigate(['/cadastro/dados-pessoais']); //redirecionando a rota
     }
   }
 
@@ -97,4 +98,3 @@ export class CadastroFormComponent implements OnInit{ //metodo de inicializacao 
   }
 
 }
-   
