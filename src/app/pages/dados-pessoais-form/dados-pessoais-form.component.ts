@@ -1,9 +1,16 @@
 import { CadastroService } from './../../shared/services/cadastro.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validator, ValidatorFn, Validators } from '@angular/forms';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { Router } from '@angular/router';
+
+export const senhasIguaisValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const senha = control.get('senha');
+  const confirmaSenha = control.get('confirmaSenha');
+
+  return senha && confirmaSenha && senha.value === confirmaSenha.value ? null : { senhasNaoIguais: true };
+}
 
 @Component({
   selector: 'app-dados-pessoais-form',
@@ -60,6 +67,9 @@ export class DadosPessoaisFormComponent implements OnInit{
   //é chamado depois que a injeção de dependências e a construção do componente foram concluídas
   //criar o formulário no ngOnInit() garante que tudo esteja pronto antes de começar a interagir com o DOM ou lógica reativa
   ngOnInit(): void {
+
+    const formOptions: AbstractControlOptions = {validators: senhasIguaisValidator};
+
     this.dadosPessoaisForm = this.fb.group({
       nomeCompleto: ['', Validators.required],
       estado: ['', Validators.required],
@@ -67,7 +77,7 @@ export class DadosPessoaisFormComponent implements OnInit{
       email: ['', [Validators.required, Validators.email]], //segundo validators -- nativo do angular
       senha: ['', [Validators.required, Validators.minLength(6)]], //no minimo 6 caracteres
       confirmaSenha: ['', Validators.required]
-    })
+    }, formOptions)
   }
 
   onAnterior(): void {
