@@ -10,6 +10,7 @@
 
       <form [formGroup]="dadosPessoaisForm" (ngSubmit)="onProximo()">
 
+        <!-- nome completo -->
         <div class="cadastro-form__field">
           <label for="nomeCompleto" class="cadastro-form__label">Nome Completo</label>
           <input id="nomeCompleto" type="text" class="cadastro-form__input" formControlName="nomeCompleto">
@@ -18,6 +19,7 @@
                       class="cadastro-form__error">Nome completo é obrigatório</div>
         </div>
 
+        <!-- CPF -->
         <div class="cadastro-form__field">
           <label for="cpf" class="cadastro-form__label">CPF</label>
           <input id="cpf"
@@ -34,6 +36,7 @@
             </div>
         </div>
 
+        <!-- estado -->
         <div class="cadastro-form__row">
           <div class="cadastro-form__field cadastro-form__field--half">
             <label for="estado" class="cadastro-form__label">Estado</label>
@@ -51,6 +54,7 @@
           </div>
         </div>
 
+        <!-- cidade -->
         <div class="cadastro-form__field cadastro-form__field--half">
           <label for="cidade" class="cadastro-form__label">Cidade</label>
           <select id="cidade" type="text" class="cadastro-form__input" formControlName="cidade">
@@ -66,19 +70,38 @@
                    class="cadastro-form__error">Cidade é obrigatório</div>
         </div>
 
+        <!-- email -->
         <div class="cadastro-form__field">
           <label for="email" class="cadastro-form__label">Email</label>
-          <input id="email" type="text" class="cadastro-form__input" formControlName="email">
-          <div *ngIf="dadosPessoaisForm.get('email')?.invalid
-                   && dadosPessoaisForm.get('email')?.touched"
-                   class="cadastro-form__error">
+
+          <div class="input-container">
+            <input id="email"
+                   type="text"
+                   class="cadastro-form__input"
+                   formControlName="email"
+                   [ngClass]="{ 'cadastro-form__input--error': dadosPessoaisForm.get('email')?.invalid && dadosPessoaisForm.get('email')?.touched,
+                                'cadastro-form__input--peding': dadosPessoaisForm.get('email')?.pending }">
+          </div>
+
+          <div class="cadastro-form__error-container">
+              <div *ngIf="dadosPessoaisForm.get('email')?.invalid &&
+                          dadosPessoaisForm.get('email')?.touched &&
+                         !dadosPessoaisForm.get('email')?.pending"
+                    class="cadastro-form__error">
                    <span *ngIf="dadosPessoaisForm.get('email')?.errors?.['required']">Email é obrigatório</span>
                    <span *ngIf="dadosPessoaisForm.get('email')?.errors?.['email']">Email inválido</span>
+                   <span *ngIf="dadosPessoaisForm.get('email')?.errors?.['emailExistente']">Email já cadastrado</span>
+              </div>
+
+              <div *ngIf="dadosPessoaisForm.get('email')?.pending"
+                    class="cadastro-form__pending">Verificando disponibilidade...</div>
+
           </div>
+
         </div>
 
+        <!-- senha -->
         <div class="cadastro-form__row">
-
           <div class="cadastro-form__field cadastro-form__field--half">
             <label for="senha" class="cadastro-form__label">Senha</label>
             <input id="senha" type="password" class="cadastro-form__input" formControlName="senha">
@@ -105,6 +128,7 @@
 
         </div>
 
+        <!-- botao anterior -->
         <div class="cadastro-form__actions">
           <app-button
             text="Anterior"
@@ -114,6 +138,7 @@
             (clicked)="onAnterior()">
           </app-button>
 
+          <!-- botao proximo -->
           <app-button
             text="Próximo"
             type="primary"

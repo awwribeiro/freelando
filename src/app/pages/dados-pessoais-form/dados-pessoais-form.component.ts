@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, startWith, switchMap, tap } from 'rxjs';
 import { Cidade, Estado, IbgeService } from '../../shared/services/ibge.service';
 import { cpfValidator } from '../../shared/validators/cpf.validator';
+import { EmailValidatorService } from '../../shared/services/email-validator.service';
+import { emailValidator } from '../../shared/validators/email.validator';
 
 export const senhasIguaisValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const senha = control.get('senha');
@@ -41,7 +43,8 @@ export class DadosPessoaisFormComponent implements OnInit{
     private fb: FormBuilder, //formulario
     private router: Router, //gerenciador de rotas
     private cadastroService: CadastroService, //consumir o service no componente
-    private ibgeService: IbgeService
+    private ibgeService: IbgeService,
+    private emailService: EmailValidatorService
   ){}
 
   //é chamado depois que a injeção de dependências e a construção do componente foram concluídas
@@ -55,7 +58,7 @@ export class DadosPessoaisFormComponent implements OnInit{
       cpf: ['', [Validators.required, cpfValidator]],
       estado: ['', Validators.required],
       cidade: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]], //segundo validators -- nativo do angular
+      email: ['', [Validators.required, Validators.email], [emailValidator(this.emailService)]],
       senha: ['', [Validators.required, Validators.minLength(6)]], //no minimo 6 caracteres
       confirmaSenha: ['', Validators.required]
     }, formOptions);
