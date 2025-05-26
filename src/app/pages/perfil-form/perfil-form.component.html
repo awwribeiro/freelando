@@ -38,6 +38,11 @@
                     maxlength="70"
                     rows="3">
           </textarea>
+
+          <div class="cadastro-form_field-info">
+            <span>Faça um resumo em até: {{ caracteresRestante }} caracteres</span>
+          </div>
+
           <div *ngIf="perfilForm.get('resumo')?.invalid && perfilForm.get('resumo')?.touched"
                 class="cadastro-form__error">
                 <span *ngIf="perfilForm.get('resumo')?.errors?.['required']">Resumo é obrigatório</span>
@@ -109,6 +114,33 @@
           </div>
         </div>
 
+        <!-- portifolio -->
+        <div class="cadastro-form__field">
+          <label for="portfolio" class="cadastro-form__label">Portfólio</label>
+          <input id="portfolio"
+                 type="url"
+                 class="cadastro-form__input"
+                 formControlName="portfolio"
+                 placeholder="Cole o link do seu portfólio">
+          <div *ngIf="perfilForm.get('portfolio')?.invalid && perfilForm.get('portfolio')?.touched" class="cadastro-form__error">
+            URL inválida. Inclua http:// ou https://
+          </div>
+        </div>
+
+        <!-- linkedin -->
+        <div class="cadastro-form__field">
+          <label for="linkedin" class="cadastro-form__label">LinkedIn</label>
+          <input id="linkedin"
+                 type="url"
+                 class="cadastro-form__input"
+                 formControlName="linkedin"
+                 placeholder="Cole o link do seu perfil no LinkedIn">
+          <div *ngIf="perfilForm.get('linkedin')?.invalid && perfilForm.get('linkedin')?.touched" class="cadastro-form__error">
+            URL do LinkedIn inválida
+          </div>
+        </div>
+
+         <!-- botao anterior -->
         <div class="cadastro-form__actions">
           <app-button
             text="Anterior"
@@ -118,6 +150,7 @@
             (clicked)="onAnterior()">
           </app-button>
 
+           <!-- botao proximo -->
           <app-button
             text="Próximo"
             type="primary"

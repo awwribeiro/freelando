@@ -15,7 +15,7 @@ interface CadastroData {
   resumo?: string ;
   habilidadesSelecionadas?: Array<Habilidade> ;
   idiomas?: Array<Idioma> ;
-  portifolio?: string ;
+  portfolio?: string ;
   linkedin?: string ;
 }
 
