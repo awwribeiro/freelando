@@ -65,9 +65,9 @@ export function getDadosPessoaisConfig(emailService: any): FormConfig {
         formControlName: 'senha',
         type: 'password',
         required: true,
+        validators: [Validators.required, Validators.minLength],
         errorMessages: {required: 'Senha é obrigatória',
                         minlength: 'Senha deve ter pelo menos 6 caracteres'},
-        validators: [Validators.required, Validators.minLength],
         width: 'half'
       },
       {
